@@ -27,10 +27,10 @@ normalize2 lst =
         zeroes =
             Array.repeat (List.length lst) 0
 
-        update : ( Int, ( Int, a ) ) -> Array Int -> Array Int
+        update : ( Int, Int ) -> Array Int -> Array Int
         update tup arr =
             let
-                ( idx1, ( idx2, _ ) ) =
+                ( idx1, idx2 ) =
                     tup
             in
             Array.set idx2 idx1 arr
@@ -38,7 +38,7 @@ normalize2 lst =
     lst
         |> List.indexedMap Tuple.pair
         |> List.sortBy Tuple.second
-        |> List.indexedMap Tuple.pair
+        |> List.indexedMap (\idx1 ( idx2, _ ) -> ( idx1, idx2 ))
         |> List.foldl update zeroes
         |> Array.toList
 
